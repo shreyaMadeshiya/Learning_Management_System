@@ -13,76 +13,77 @@ const cookieOptions={
 
 
 const register=async(req,res,next)=>{
-      const { fullName, email, password }  = req.body;  
-      if(!fullName,email,password){
-        return next (new AppError('All fields are required',400));
-      }
+   const { fullName, email, password }  = req.body;  
+    if(!fullName,email,password){
+      return next (new AppError('All fields are required',400));
+    }
 
-      const userExists= await UserActivation.findOne({ email});
+ const userExists= await UserActivation.findOne({ email});
 
-      if(userExists){
-        return next(new AppError ('Email already exists',400));
-      }
-         const user = await UserActivation.create({
-          fullName,
-          email,
-          password,
-          avatar:{
-            public_id:email,
-            secure_url:'https://res.cloudinary.com/du9jzqlpt/image/upload/v1674647316/avatar_drzgxv.jpg',
-          }
-         });
-
-         if (!user){
-          return next (new AppError('User registration failed, please try again',400))
-         }
-
-         //TODO:File upload
-         console.log("file details >",JSON.stringify(req));
-
-         if (req.file){
-
-          try{
-        const result = await cloudinary.v2.uploader.upload(req.file.path,{
-                folder:'lms',
-                width:250,
-                height:250,
-                gravity:'faces',
-                crop:'fill'
-        });
-          
-          if(result){
-            user.avatar.public_id=result.public_id;
-            user.avatar.secure_url= result.secure_url;
-
-
-            //Remove file from server
-            fs.rm(`uploads/${req.file.filename}`)
-          }
-                 
-          }
-          catch(e){
-           return next(
-            new AppError(error || 'File not uploaded,please try agin',500)
-            
-           )
-          }
-         }
-
-         await user.save();
-
-        user.password = undefined;
-
-        const token = await user.generateJWTToken();
+   if(userExists){
+   return next(new AppError ('Email already exists',400));
+    }
+   const user = await UserActivation.create({
+    fullName,
+    email,
+    password,
+    avatar:{
+  public_id:email,
+  secure_url:'https://res.cloudinary.com/du9jzqlpt/image/upload/v1674647316/avatar_drzgxv.jpg',
+  }
+  });
+         
+   if (!user){
         
-        res.cookie ('token', token,cookieOptions)
+  return next (new AppError('User registration failed, please try again',400))
+ }
 
-         register.status (201).json({
-          success:true,
-          message:'user registered successfully',
-          user,
-         })
+ //TODO:File upload
+ console.log("file details >",JSON.stringify(req));
 
+if (req.file){
+
+   try{
+    const result = await cloudinary.v2.uploader.upload(req.file.path,{
+      folder:'lms',
+      width:250,
+      height:250,
+    gravity:'faces',
+     crop:'fill'
+    });
+          
+     if(result){
+    user.avatar.public_id=result.public_id;
+    user.avatar.secure_url= result.secure_url;
+
+
+    //Remove file from server
+    fs.rm(`uploads/${req.file.filename}`)
+    }
+                 
+    }
+    catch(e){
+    return next(
+    new AppError(error || 'File not uploaded,please try agin',500)
+            
+     )
+      }
+      }
+
+ await user.save();
+
+  user.password = undefined;
+
+  const token = await user.generateJWTToken();
+        
+  res.cookie ('token', token,cookieOptions)
+
+    register.status (201).json({
+      success:true,
+      message:'user registered successfully',
+      user,
+      })
+      
          
 
 };

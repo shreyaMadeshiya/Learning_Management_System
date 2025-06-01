@@ -26,8 +26,10 @@ app.use(cookieParser());
 
 
 app.use('/ping',function(req,res){
-       res.send('pong');
+       res.send('Pong');
 });
+
+// routes of three module 
 
 app.use('/api/v1/user',userRoutes);
 app.use('/api/v1/courses',courseRoutes);
