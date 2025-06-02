@@ -7,8 +7,6 @@ import userRoutes from './routes/user.routes.js';
 import courseRoutes from './routes/course.route.js';
 import errorMiddleware from './middlewares/error.middleware.js';
 
-
-
 config();
 
 const app = express();

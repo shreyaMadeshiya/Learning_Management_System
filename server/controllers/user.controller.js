@@ -88,7 +88,7 @@ if (req.file){
 
 };
 
-const login =async (req,res)=>{
+const login =async (req,res,next)=>{
   try{
     const { email ,password}=req.body
     if(!email|| !password){
@@ -115,7 +115,7 @@ const login =async (req,res)=>{
   }
   catch(e)
 {
-  returnnext(new AppError(e.message,400 ));
+  return next(new AppError(e.message,400 ));
 }
  
 };

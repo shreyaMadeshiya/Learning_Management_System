@@ -1,8 +1,9 @@
 import app from './app.js';
-import userRoutes from './routes/user.routes.js';
 import connectionToDB from './config/dbConnection.js';
 import cloudinary from 'cloudinary';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 const PORT= process.env.PORT || 5000;
 
