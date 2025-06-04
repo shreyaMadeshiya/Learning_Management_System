@@ -1,11 +1,13 @@
-import  cookieParser from 'cookie-parser';
 import express from 'express';
 import cors from 'cors';
+import  cookieParser from 'cookie-parser';
 import { config } from 'dotenv';
 import morgan from 'morgan';
 import userRoutes from './routes/user.routes.js';
 import courseRoutes from './routes/course.route.js';
 import errorMiddleware from './middlewares/error.middleware.js';
+import paymentRoutes from './routes/payment.routes.js';
+
 
 config();
 
@@ -31,6 +33,7 @@ app.use('/ping',function(req,res){
 
 app.use('/api/v1/user',userRoutes);
 app.use('/api/v1/courses',courseRoutes);
+app.use('/api/v1/payments',paymentRoutes);
 
 
 app.all('*',(req,res)=>{

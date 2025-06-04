@@ -200,7 +200,7 @@ const {title , description} = req.body;
             new AppError(e.message,500)
         )
     }
-  }
+  };
 
   course.lectures.push(lectureData);
 
