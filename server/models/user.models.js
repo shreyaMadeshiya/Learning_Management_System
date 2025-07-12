@@ -5,16 +5,16 @@ import crypto from 'crypto';
 
 const userSchema = new Schema({
      fullName:{
-        type:'String',
+        type: String,
         required:[true,'Name is required'],
         minLength:[5,'Name should be at least 5 character'],
-        maxLength:[50,'Name should be less than 50 character '],
+        maxLength:[50,'Name should be less than 50 characters '],
         lowercase:true,
         trim:true,
      },
 
      email:{
-        type:'String',
+        type: String,
         required:[true,'Email is required'],
         lowercase:true,
         trim:true,
@@ -25,17 +25,17 @@ const userSchema = new Schema({
         ]
      },
      password:{
-        type:'String',
+        type: String,
         required:[true,'Password is required'],
         minLength:[8,'Password must be at least 8 character'],
-        slect:false
+        select:false
      },
      avatar:{
         public_id:{
-            type:'String'
+            type: String
         },
         secure_url:{
-            type:'String'
+            type: String
         }
      },
      role:{
@@ -81,7 +81,7 @@ userSchema.methods={
         .update(resetToken)
         .digest('hex')
         ;
-        this.forgotPasswordExpiry=Date.now()+15*60*1000;// 15min from now
+        this.forgotPasswordExpiry=Date.now() + 15 * 60 * 1000;// 15min from now
         return resetToken;
     }
 }

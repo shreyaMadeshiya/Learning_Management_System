@@ -8,7 +8,7 @@ const getAllCourses = async function (req,res,next){
     try{
         const courses = await Course.find({}).select('-lectures');
        res.status(200).json({
-        sucess:true,
+        success:true,
         message:'All courses',
         courses,
        }); 
@@ -37,7 +37,7 @@ const getLecturesByCourseId= async function (req,res,next){
     }
 
     res.status(200).json({
-        sucess: true,
+        success: true,
         message: "Course lectures fetched successfully ",
         lectures: course.lectures
     });
@@ -84,7 +84,7 @@ const createCourse= async (req,res,next)=>{
             course.thumbnail.public_id= result.public_id;
             course.thumbnail.secure_url= result.secure_url;
         }
-        fs.rm(`uploads/${req.file.filename}`);
+        await fs.rm(`uploads/${req.file.filename}`);
     }
      
     catch(e){
@@ -96,7 +96,7 @@ const createCourse= async (req,res,next)=>{
     
     await course.save();
     res.status(200).json({
-        sucess: true,
+        success: true,
         message: 'Course created successfully',
         course,
     });
@@ -105,13 +105,13 @@ const createCourse= async (req,res,next)=>{
 const updateCourse = async (req,res,next)=>{
 try{
      const {id} = req.params;
-     const course =await Course.findByIdAnyUpdate(
+     const course =await Course.findByIdAndUpdate(
         id,
         {
             $set: req.body
         },
         {
-            runValidators:true
+            runValidators:true,new: true
         }
      );
 
@@ -121,7 +121,7 @@ try{
         )
      }
      res.status(200).json({
-        sucess:true,
+        success:true,
         message: 'Course updated sucessfully !',
         course
      })
@@ -145,8 +145,8 @@ try{
     await Course.findByIdAndDelete(id);
 
     res.status(200).json({
-             sucess: true,
-             message: 'Course delected sucessfully'
+             success: true,
+             message: 'Course deleted sucessfully'
     })
 }
 catch(e){
@@ -161,7 +161,7 @@ const addLectureToCourseById =async(req,res,next)=>{
 const {title , description} = req.body;
       const {id}=req.params;
 
-       if (!title || !description || !category ||!createdBy){
+       if (!title || !description){
         return next (
             new AppError('All fields are Required',400)
         )
@@ -192,7 +192,7 @@ const {title , description} = req.body;
             lectureData.lecture.public_id= result.public_id;
             lectureData.lecture.secure_url= result.secure_url;
         }
-        fs.rm(`uploads/${req.file.filename}`);
+        await fs.rm(`uploads/${req.file.filename}`);
     }
      
     catch(e){
@@ -204,7 +204,7 @@ const {title , description} = req.body;
 
   course.lectures.push(lectureData);
 
-  course.numberOfLectures = course.lectures.length;
+  course.numbersOfLectures = course.lectures.length;
   await course.save();
 
   res.status(200).json({

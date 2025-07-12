@@ -26,7 +26,8 @@ router.route('/:id')
     removeCourse
 )
 
-.post(
+router.post(
+     '/:id/lecture',  
      isLoggedIn,
    authorizedRoles('ADMIN'),
    upload.single('lecture'),

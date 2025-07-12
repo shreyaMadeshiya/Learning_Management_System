@@ -18,7 +18,7 @@ router
     )
 
 router 
-    .route('verify')
+    .route('/verify')
     .post (
         isLoggedIn,
         verifySubscription
