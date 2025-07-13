@@ -58,6 +58,13 @@
 
 ```
   npm run dev
+  
+```
+
+6. Add Daisyui import in `index.css`
+``` 
+   @plugin "daisyui"
+
 ```
 
 ### Adding plugins and dependencies
@@ -99,3 +106,4 @@
    ~ Open `settings.json`
    
 ```
+
