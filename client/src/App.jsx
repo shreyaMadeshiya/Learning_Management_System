@@ -12,10 +12,11 @@ function App() {
     <>
     <Routes>
       <Route path="/" element = {<HomePage />}></Route>
+      <Route path="/about" element={<HomePage/>}></Route>
     </Routes>
 
   
     </>
 )}
 
-export default App
+export default App;
