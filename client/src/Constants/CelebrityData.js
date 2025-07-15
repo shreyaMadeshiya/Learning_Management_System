@@ -1,4 +1,4 @@
-import AlbertEinstein from "../assets/Images/.AlbertEinsteinjpg";
+import AlbertEinstein from "../assets/Images/AlbertEinstein.jpg";
 import APJ from "../assets/Images/APJ.jpg";
 import BillGates from "../assets/Images/BillGates.jpg";
 import NelsonMandela from "../assets/Images/NelsonMandela.jpg";
