@@ -7,7 +7,8 @@ import CourseList from './Pages/Course/CourseList';
 import HomePage from './Pages/HomePage';
 import Login from './Pages/login';
 import NotFound from './Pages/NotFound';
-import Signup from './Pages/SignUp';
+import Signup from './Pages/Signup';
+
 
 
 
