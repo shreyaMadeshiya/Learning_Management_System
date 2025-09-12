@@ -8,39 +8,21 @@ const initialState = {
     data: localStorage.getItem('data') != undefined ? JSON.parse(localStorage.getItem('data')) : {}
 };
 
-// export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
-//     try {
-//         const res =  axiosInstance.post("user/register", data);
-//         toast.promise(res, {
-//             loading: "Wait! creating your account",
-//             success: (data) => {
-//                 return data?.data?.message;
-//             },
-//             error: "Failed to create account"
-//         });
-//         return (await res).data;
-//     } catch(error) {
-//         toast.error(error?.response?.data?.message);
-//     }
-// })
-export const createAccount = createAsyncThunk("/auth/signup", async (data, { rejectWithValue }) => {
+export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
     try {
-        const resPromise = axiosInstance.post("user/register", data); // FormData
-
-        toast.promise(resPromise, {
+        const res = axiosInstance.post("user/register", data);
+        toast.promise(res, {
             loading: "Wait! creating your account",
-            success: (res) => res?.data?.message,
+            success: (data) => {
+                return data?.data?.message;
+            },
             error: "Failed to create account"
         });
-
-        const res = await resPromise;
-        return res.data;
-    } catch (error) {
-        toast.error(error?.response?.data?.message || "Something went wrong");
-        return rejectWithValue(error?.response?.data); // for proper thunk error handling
+        return (await res).data;
+    } catch(error) {
+        toast.error(error?.response?.data?.message);
     }
-});
-
+})
 
 export const login = createAsyncThunk("/auth/login", async (data) => {
     try {
@@ -134,3 +116,4 @@ const authSlice = createSlice({
 
 // export const {} = authSlice.actions;
 export default authSlice.reducer;
+
