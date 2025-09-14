@@ -12,13 +12,13 @@
 // axiosInstance.js
 import axios from "axios";
 
-// ✅ Base URL where your backend is running
-const BASE_URL = "http://localhost:5014/api/v1";
+// ✅ Use your backend's actual URL (from .env)
+const BASE_URL = import.meta.env.VITE_BACKEND_URL + "/api/v1";
 
-// ✅ Create preconfigured axios instance
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
-  withCredentials: true, // Send cookies (JWT, session) in requests
+  withCredentials: true,
 });
 
 export default axiosInstance;
+
